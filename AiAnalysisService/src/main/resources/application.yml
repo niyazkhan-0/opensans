@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: aianalysis-service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: uploads-processor-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: com.example.AiAnalysisService.Model.MediaUploadedEvent
+        spring.json.trusted.packages: "*"
+
+  ai:
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          options:
+            model: gemini-3.6-flash
+
+kafka:
+  topic:
+    name: upload-media
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+
+server:
+  port: 8083
