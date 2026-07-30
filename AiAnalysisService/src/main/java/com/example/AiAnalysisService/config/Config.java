@@ -11,7 +11,7 @@ import org.springframework.kafka.listener.DefaultErrorHandler;
 import org.springframework.util.backoff.FixedBackOff;
 
 @Configuration
-public class WebClientConfig {
+public class Config {
 
     @Bean
     @LoadBalanced

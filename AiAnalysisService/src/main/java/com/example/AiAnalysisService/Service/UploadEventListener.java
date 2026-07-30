@@ -26,6 +26,7 @@ public class UploadEventListener {
                     log.info("Analyzed Topic: {}", analysisRequest.getTopic());
                     log.info("Analyzed Details: {}", analysisRequest.getDetails());
                     log.info("Analyzed Summary: {}", analysisRequest.getSummary());
+
                 })
                 .doOnError(error -> {
                     log.error("Failed to process upload event: {}", error.getMessage());

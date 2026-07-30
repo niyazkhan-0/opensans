@@ -18,6 +18,8 @@ public class MediaAnalysisRequest {
 
     private String topic;
 
+    private String mediaId;
+
     private Map<String, Object> details = new HashMap<>();
 
     private List<String> summary = new ArrayList<>();

@@ -2,6 +2,7 @@ package com.example.UploadService.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -19,10 +20,10 @@ public class MediaAnalysis {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "media_id", nullable = false, unique = true)
+    @JoinColumn(name = "media_id", referencedColumnName = "id", nullable = false, unique = true)
     private UploadedMedia media;
 
     //ai response topic
@@ -41,16 +42,16 @@ public class MediaAnalysis {
     @Column(columnDefinition = "jsonb")
     private List<String> summary = new ArrayList<>();
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private AnalysisStatus status;
-
+    @CreationTimestamp
     private LocalDateTime analyzedAt;
 
-    @PrePersist
-    public void prePersist() {
-        if (status == null) {
-            status = AnalysisStatus.PENDING;
+    public void setMedia(UploadedMedia media) {
+
+        this.media = media;
+
+        if (media != null && media.getMediaAnalysis() != this) {
+            media.setMediaAnalysis(this);
         }
     }
+
 }

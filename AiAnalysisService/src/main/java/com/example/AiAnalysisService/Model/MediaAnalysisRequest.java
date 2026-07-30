@@ -18,6 +18,8 @@ public class MediaAnalysisRequest {
 
     private String topic;
 
+    private String mediaId;
+
     @Builder.Default
     private Map<String, Object> details = new HashMap<>();
 

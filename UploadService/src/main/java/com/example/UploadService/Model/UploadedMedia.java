@@ -25,7 +25,8 @@ public class UploadedMedia {
     @OneToOne(
             mappedBy = "media",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            orphanRemoval = true
     )
     private MediaAnalysis mediaAnalysis;
 
@@ -70,6 +71,15 @@ public class UploadedMedia {
     @PreUpdate
     public void preUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    public void setMediaAnalysis(MediaAnalysis analysis) {
+
+        this.mediaAnalysis = analysis;
+
+        if (analysis != null && analysis.getMedia() != this) {
+            analysis.setMedia(this);
+        }
     }
 
 
