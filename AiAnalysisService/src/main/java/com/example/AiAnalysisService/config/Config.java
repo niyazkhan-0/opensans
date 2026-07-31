@@ -21,7 +21,7 @@ public class Config {
 
     @Bean
     public WebClient uploadServiceWebClient(WebClient.Builder webClientBuilder){
-        return WebClient.builder()
+        return webClientBuilder
                 .baseUrl("http://UPLOAD-SERVICE")
                 .build();
     }
