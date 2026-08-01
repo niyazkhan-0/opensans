@@ -1,6 +1,7 @@
 package com.example.UploadService.controller;
 
 import com.example.UploadService.Model.AnalysisStatus;
+import com.example.UploadService.Model.UploadedMedia;
 import com.example.UploadService.dto.MediaAnalysisRequest;
 import com.example.UploadService.service.AnalysisService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,11 @@ public class AnalysisController {
         }else{
             return ResponseEntity.ok(analysisService.updateAnalysisStatus(analysisStatus, analysisRequest.getMediaId()));
         }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<UploadedMedia> deleteMedia(){
+
     }
 
 }

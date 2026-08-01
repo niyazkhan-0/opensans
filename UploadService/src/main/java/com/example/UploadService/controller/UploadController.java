@@ -1,5 +1,6 @@
 package com.example.UploadService.controller;
 
+import com.example.UploadService.Model.MediaAnalysis;
 import com.example.UploadService.dto.UploadResponse;
 import com.example.UploadService.service.UploadService;
 import lombok.RequiredArgsConstructor;
@@ -28,4 +29,8 @@ public class UploadController {
                 .status(HttpStatus.CREATED)
                 .body(response);
     }
+
+    @GetMapping()
+    public ResponseEntity<MediaAnalysis> getMediaAnalysis(){}
+
 }
