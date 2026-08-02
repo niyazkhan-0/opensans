@@ -6,6 +6,7 @@ import com.example.UploadService.Model.AnalysisStatus;
 import com.example.UploadService.Model.MediaAnalysis;
 import com.example.UploadService.Model.UploadedMedia;
 import com.example.UploadService.dto.MediaAnalysisRequest;
+import com.example.UploadService.dto.MediaAnalysisResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,21 @@ public class AnalysisService {
         }
 
         return "Media updated successfully";
+    }
+
+    public MediaAnalysisResponse getMediaAnalysis(String id) {
+
+        if(id == null){
+            throw new RuntimeException("invalid ID");
+        }
+
+        MediaAnalysis mediaAnalysis = analysisRepository.findByMediaId(id)
+                .orElseThrow(() -> new RuntimeException("Medial not found with the analysis: " + id));
+
+        return MediaAnalysisResponse.builder()
+                .topic(mediaAnalysis.getTopic())
+                .summary(mediaAnalysis.getSummary())
+                .details(mediaAnalysis.getDetails())
+                .build();
     }
 }

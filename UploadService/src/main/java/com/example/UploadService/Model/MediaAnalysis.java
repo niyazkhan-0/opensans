@@ -23,7 +23,7 @@ public class MediaAnalysis {
     private String id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "media_id", referencedColumnName = "id", nullable = false, unique = true)
+    @JoinColumn(name = "mediaId", referencedColumnName = "id", nullable = false, unique = true)
     private UploadedMedia media;
 
     //ai response topic
