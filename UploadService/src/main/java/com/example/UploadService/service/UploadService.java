@@ -123,4 +123,12 @@ public class UploadService {
 
         throw new IllegalArgumentException("Unsupported file type");
     }
+
+    public void deleteMedia(String id) {
+
+        UploadedMedia media = mediaRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("No media found"));
+
+        mediaRepository.delete(media);
+    }
 }

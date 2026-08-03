@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/analysis/upload")
+@RequestMapping("/api/media/analysis")
 @RequiredArgsConstructor
 public class AnalysisController {
 

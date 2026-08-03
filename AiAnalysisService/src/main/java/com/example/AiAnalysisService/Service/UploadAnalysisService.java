@@ -17,7 +17,7 @@ public class UploadAnalysisService {
 
     public Mono<String> uploadAnalysis(MediaAnalysisRequest analysisRequest, AnalysisStatus analysisStatus){
         return uploadServiceWebClient.post()
-                .uri("/api/analysis/upload")
+                .uri("/api/media/analysis")
                 .bodyValue(analysisRequest)
                 .header("Analysis-Status",String.valueOf(analysisStatus) )
                 .retrieve()

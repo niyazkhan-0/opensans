@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/uploads")
+@RequestMapping("/api/media")
 @RequiredArgsConstructor
 public class UploadController {
 
@@ -29,6 +29,12 @@ public class UploadController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMedia(@PathVariable String id){
+        uploadService.deleteMedia(id);
+        return ResponseEntity.noContent().build();
     }
 
 
