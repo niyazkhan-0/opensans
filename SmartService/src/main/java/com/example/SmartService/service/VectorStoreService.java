@@ -22,17 +22,17 @@ public class VectorStoreService {
 
         // Step 1: Build a natural language text from the analysis
         // This is what gets converted into a vector — quality of text = quality of search
-        String summaryText = String.join(". ", event.getSummary());
+        String summaryText = String.join(". ", event.getSummary() );
 
         String detailsText = event.getDetails().entrySet().stream()
                 .map(entry -> entry.getKey() + ": " + entry.getValue())
                 .collect(Collectors.joining(", "));
 
         String content = String.format(
-                "Topic: %s. Summary: %s. Details: %s.",
+                "Topic : %s Details : %s Summary : %s",
                 event.getTopic(),
-                summaryText,
-                detailsText
+                detailsText,
+                summaryText
         );
 
         // Step 2: Attach metadata — used for filtering and retrieving the actual media

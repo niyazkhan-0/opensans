@@ -1,4 +1,17 @@
 services:
+
+  postgres:
+    image: pgvector/pgvector:pg17    # change pg17 to match your PostgreSQL version
+    container_name: opensans-postgres
+    environment:
+      POSTGRES_DB: opensans-media
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 8275097876
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   minio:
     image: quay.io/minio/minio
     container_name: minio
@@ -18,3 +31,4 @@ services:
 
 volumes:
   minio_data:
+  postgres_data:
