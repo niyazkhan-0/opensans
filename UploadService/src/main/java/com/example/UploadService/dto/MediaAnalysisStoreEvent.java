@@ -14,13 +14,17 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class MediaAnalysisResponse {
+public class MediaAnalysisStoreEvent {
+
+    private String mediaId;
+
+    private String uploadedBy;
 
     private String topic;
 
     @Builder.Default
-    private Map<String, Object> details = new HashMap<>();
+    private List<String> summary = new ArrayList<>();
 
     @Builder.Default
-    private List<String> summary = new ArrayList<>();
+    private Map<String, Object> details = new HashMap<>();
 }

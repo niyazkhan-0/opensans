@@ -26,7 +26,7 @@ public class UploadService {
     private final MediaRepository mediaRepository;
     private final KafkaTemplate<String, MediaUploadedEvent> kafkaTemplate;
 
-    @Value("${kafka.topic.name}")
+    @Value("${kafka.topic.upload-media}")
     private String topicName;
 
     public UploadResponse uploadMedia(MultipartFile file, String userId) {

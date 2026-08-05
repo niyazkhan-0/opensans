@@ -38,7 +38,9 @@ eureka:
 
 kafka:
   topic:
-    name: upload-media
+    upload-media: upload-media
+    analysis-stored: analysis-stored
+
 
 server:
   port: 8082

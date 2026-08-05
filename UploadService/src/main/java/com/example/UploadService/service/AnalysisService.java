@@ -7,8 +7,11 @@ import com.example.UploadService.Model.MediaAnalysis;
 import com.example.UploadService.Model.UploadedMedia;
 import com.example.UploadService.dto.MediaAnalysisRequest;
 import com.example.UploadService.dto.MediaAnalysisResponse;
+import com.example.UploadService.dto.MediaAnalysisStoreEvent;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +20,10 @@ public class AnalysisService {
 
     private final MediaAnalysisRepository analysisRepository;
     private final MediaRepository mediaRepository;
+    private final KafkaTemplate<String, MediaAnalysisStoreEvent> kafkaTemplate;
+
+    @Value("${kafka.topic.analysis-stored}")
+    private String topicName;
 
     @Transactional
     public String storeAnalysis(MediaAnalysisRequest analysisRequest, AnalysisStatus status) {
@@ -36,6 +43,19 @@ public class AnalysisService {
         uploadedMedia.setAnalysisStatus(status);
 
         mediaRepository.save(uploadedMedia);
+
+        //code for sending data to smart-service
+
+        MediaAnalysisStoreEvent mediaAnalysisStoreEvent = MediaAnalysisStoreEvent.builder()
+                .mediaId(uploadedMedia.getId())
+                .uploadedBy(uploadedMedia.getUploadedBy())
+                .topic(mediaAnalysis.getTopic())
+                .details(mediaAnalysis.getDetails())
+                .summary(mediaAnalysis.getSummary())
+                .build();
+
+        kafkaTemplate.send(topicName, uploadedMedia.getId(),mediaAnalysisStoreEvent);
+
 
         return "Analysis stored successfully";
     }
