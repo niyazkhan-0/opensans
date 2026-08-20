@@ -4,11 +4,14 @@ import com.example.UploadService.Model.AnalysisStatus;
 import com.example.UploadService.Model.UploadedMedia;
 import com.example.UploadService.dto.MediaAnalysisRequest;
 import com.example.UploadService.dto.MediaAnalysisResponse;
+import com.example.UploadService.dto.MultipleMediaAnalysisRequest;
 import com.example.UploadService.service.AnalysisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/media/analysis")
@@ -29,11 +32,11 @@ public class AnalysisController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<MediaAnalysisResponse> getMediaAnalysis(
-            @PathVariable String id
-    ){
-        MediaAnalysisResponse mediaAnalysisResponse= analysisService.getMediaAnalysis(id);
+    @PostMapping("/batch")
+    public ResponseEntity<List<MediaAnalysisResponse>> getMediaAnalysis(
+            @RequestBody MultipleMediaAnalysisRequest request
+            ){
+        List<MediaAnalysisResponse> mediaAnalysisResponse= analysisService.getMediaAnalysis(request.getMediaId());
 
         return ResponseEntity.ok(mediaAnalysisResponse);
     }

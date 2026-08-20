@@ -8,11 +8,14 @@ import com.example.UploadService.Model.UploadedMedia;
 import com.example.UploadService.dto.MediaAnalysisRequest;
 import com.example.UploadService.dto.MediaAnalysisResponse;
 import com.example.UploadService.dto.MediaAnalysisStoreEvent;
+import com.example.UploadService.dto.MultipleMediaAnalysisRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -72,19 +75,22 @@ public class AnalysisService {
         return "Media updated successfully";
     }
 
-    public MediaAnalysisResponse getMediaAnalysis(String id) {
+    public List<MediaAnalysisResponse> getMediaAnalysis(List<String> ids) {
 
-        if(id == null){
+        if(ids == null || ids.isEmpty()){
             throw new RuntimeException("invalid ID");
         }
 
-        MediaAnalysis mediaAnalysis = analysisRepository.findByMediaId(id)
-                .orElseThrow(() -> new RuntimeException("Medial not found with the analysis: " + id));
+        List<MediaAnalysis> mediaAnalysis = analysisRepository.findByMediaIdIn(ids);
 
-        return MediaAnalysisResponse.builder()
-                .topic(mediaAnalysis.getTopic())
-                .summary(mediaAnalysis.getSummary())
-                .details(mediaAnalysis.getDetails())
-                .build();
+        return mediaAnalysis.stream()
+                .map(analysis -> MediaAnalysisResponse.builder()
+                        .topic(analysis.getTopic())
+                        .details(analysis.getDetails())
+                        .summary(analysis.getSummary())
+                        .mediaId(analysis.getMedia().getId())
+                        .build()
+                ).toList();
+
     }
 }

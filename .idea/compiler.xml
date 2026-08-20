@@ -11,6 +11,7 @@
         <module name="UploadService" />
         <module name="AiAnalysisService" />
         <module name="UserService" />
+        <module name="SmartService" />
         <module name="GatewayService" />
       </profile>
     </annotationProcessing>
@@ -20,6 +21,7 @@
       <module name="AiAnalysisService" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
       <module name="GatewayService" options="-parameters" />
+      <module name="SmartService" options="-parameters" />
       <module name="UploadService" options="-parameters" />
       <module name="UserService" options="-parameters" />
     </option>
